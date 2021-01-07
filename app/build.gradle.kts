@@ -25,6 +25,7 @@ tasks.withType<KotlinCompile>().all {
 
 tasks.shadowJar {
     archiveClassifier.set("")
+    mergeServiceFiles()
 }
 
 tasks.assemble {
