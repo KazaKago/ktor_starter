@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     application
     kotlin("jvm")
+    id("com.github.johnrengelman.shadow") version "6.1.0"
 }
 
 group = "com.kazakago.ktor_starter"
@@ -19,6 +20,17 @@ java {
 
 tasks.withType<KotlinCompile>().all {
     kotlinOptions.jvmTarget = "11"
+}
+
+tasks.shadowJar {
+    archiveClassifier.set("")
+    mergeServiceFiles()
+}
+
+tasks.register("stage") {
+    group = "heroku"
+    dependsOn(tasks.clean)
+    dependsOn(tasks.shadowJar)
 }
 
 dependencies {
